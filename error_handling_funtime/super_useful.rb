@@ -1,6 +1,10 @@
+require 'byebug'
 # PHASE 2
 def convert_to_int(str)
   Integer(str)
+
+  rescue
+  return nil
 end
 
 # PHASE 3
@@ -9,25 +13,41 @@ FRUITS = ["apple", "banana", "orange"]
 def reaction(maybe_fruit)
   if FRUITS.include? maybe_fruit
     puts "OMG, thanks so much for the #{maybe_fruit}!"
-  else 
+  elsif maybe_fruit == "coffee"
+    raise CoffeeError
+  else
     raise StandardError 
   end 
 end
 
 def feed_me_a_fruit
+  #debugger
+
   puts "Hello, I am a friendly monster. :)"
 
   puts "Feed me a fruit! (Enter the name of a fruit:)"
   maybe_fruit = gets.chomp
   reaction(maybe_fruit) 
+  rescue CoffeeError
+    retry
 end  
+
+class CoffeeError < StandardError
+
+end
 
 # PHASE 4
 class BestFriend
+  attr_reader :yrs_known, :name, :fav_pastime
+
   def initialize(name, yrs_known, fav_pastime)
     @name = name
     @yrs_known = yrs_known
     @fav_pastime = fav_pastime
+    raise "Please enter a name" if @name.length == 0
+    raise "Please enter a favorite pastime" if @fav_pastime.length == 0
+    raise "years known must be at least 5 try again" if @yrs_known < 5
+    
   end
 
   def talk_about_friendship
